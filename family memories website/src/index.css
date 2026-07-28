@@ -1,0 +1,206 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+==========================================================================
+【AI HANDOVER NOTE】
+1. DESIGN PHILOSOPHY:
+   - Warmth-First Nostalgia: This design system prioritizes emotional warmth and intimate familiarity, creating a digital space that feels like flipping through a cherished family photo album. The aesthetic draws from vintage scrapbooking, cozy home interiors, and the tactile quality of printed photographs.
+   - Visual Style: Soft, organic surfaces with subtle texture hints. Gentle shadows that evoke paper layering. Rounded corners throughout (0.75rem) to soften the digital experience. Earth-toned palette inspired by autumn leaves, vintage photographs, and natural materials.
+   - Rationale: Family photo sharing requires trust, comfort, and accessibility across generations. The warm, non-technical aesthetic ensures grandparents feel as welcome as tech-savvy millennials.
+
+2. TYPOGRAPHY:
+   - Playfair Display (Serif): Chosen for headings to evoke classic family albums and heirloom quality. Its elegant serifs add gravitas to family names, event titles, and album headers without feeling stuffy. The high-contrast letterforms photograph well and create visual hierarchy.
+   - Inter (Sans-serif): Selected for body text due to exceptional readability at small sizes (crucial for photo captions, dates, descriptions). Its neutral, friendly character doesn't compete with emotional photo content. Excellent hinting for older devices family members might use.
+   - JetBrains Mono: Reserved for technical elements like photo metadata, upload dates, or file information in admin views.
+
+3. COLOR SYSTEM:
+   - Brand Primary (Terracotta/Warm Clay): Hue ~25° (red-orange) chosen to evoke warmth, earthiness, and the patina of aged photographs. This isn't aggressive red but a comforting, grounded tone that feels both vintage and timeless.
+   - Color Mapping: --brand maps to --primary (terracotta for CTAs like 'Upload Photo', 'Create Album'), --accent uses dusty rose (Hue ~350°) for secondary actions and highlights, --ring uses a muted terracotta for focus states that feel gentle, not alarming.
+   - Semantic Colors: --success uses forest green (Hue ~145°) to evoke growth and preservation; --warning uses amber (Hue ~45°) like aged paper; --destructive uses a muted brick red (Hue ~10°) that's serious but not harsh.
+   - Neutrals: Cream and warm beige backgrounds (slight yellow undertone, Hue ~50°) create a sepia-toned canvas. Foreground text is warm charcoal, never pure black, to reduce eye strain during long browsing sessions.
+
+4. USAGE GUIDE:
+   - Layout: Centered container (max-width: 1280px) with generous padding. Photo grids use 2-3-4 column responsive breakpoints. Album cards have subtle hover lift (transform: translateY(-2px)) with soft shadow increase.
+   - Recommended Effects: Use backdrop-blur sparingly on modals to keep focus on photos. Apply subtle box-shadow with warm tones (rgba(139, 69, 19, 0.1)) instead of pure gray. Consider sepia or warm filter overlays on background patterns.
+   - Special Rules: Maintain 4.5:1 contrast minimum for all text over photos (use semi-transparent overlays when needed). Photo thumbnails should have 1px warm border to separate from backgrounds. Event timeline uses vertical line with gradient fade for nostalgic effect.
+   - Accessibility: Ensure all interactive elements are minimum 44px touch targets for elderly users. Provide text alternatives for all photos. Support keyboard navigation for album browsing.
+==========================================================================
+*/
+
+:root {
+  /* Typography */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: JetBrains Mono, 'Courier New', monospace;
+  
+  /* Radius */
+  --radius: 0.75rem;
+
+  /* Core UI Tokens */
+  --background: oklch(0.98 0.01 50);
+  --foreground: oklch(0.22 0.02 30);
+  --card: oklch(0.96 0.015 45);
+  --card-foreground: oklch(0.24 0.02 30);
+  --popover: oklch(0.97 0.012 48);
+  --popover-foreground: oklch(0.22 0.02 30);
+  --primary: oklch(0.58 0.14 25);
+  --primary-foreground: oklch(0.98 0.01 50);
+  --secondary: oklch(0.88 0.03 45);
+  --secondary-foreground: oklch(0.28 0.02 30);
+  --muted: oklch(0.92 0.02 48);
+  --muted-foreground: oklch(0.48 0.02 35);
+  --accent: oklch(0.75 0.08 350);
+  --accent-foreground: oklch(0.98 0.01 50);
+  --destructive: oklch(0.55 0.18 10);
+  --destructive-foreground: oklch(0.98 0.01 50);
+  --border: oklch(0.86 0.02 45);
+  --input: oklch(0.84 0.025 45);
+  --ring: oklch(0.58 0.14 25);
+  
+  /* Chart Tokens */
+  --chart-1: oklch(0.58 0.14 25);
+  --chart-2: oklch(0.62 0.12 145);
+  --chart-3: oklch(0.75 0.08 350);
+  --chart-4: oklch(0.68 0.10 45);
+  --chart-5: oklch(0.52 0.10 280);
+  
+  /* Sidebar Tokens */
+  --sidebar: oklch(0.95 0.015 48);
+  --sidebar-foreground: oklch(0.28 0.02 30);
+  --sidebar-primary: oklch(0.58 0.14 25);
+  --sidebar-primary-foreground: oklch(0.98 0.01 50);
+  --sidebar-accent: oklch(0.88 0.03 45);
+  --sidebar-accent-foreground: oklch(0.28 0.02 30);
+  --sidebar-border: oklch(0.88 0.02 45);
+  --sidebar-ring: oklch(0.58 0.14 25);
+}
+
+.dark {
+  --background: oklch(0.15 0.015 30);
+  --foreground: oklch(0.92 0.01 50);
+  --card: oklch(0.18 0.018 32);
+  --card-foreground: oklch(0.90 0.01 50);
+  --popover: oklch(0.16 0.016 31);
+  --popover-foreground: oklch(0.92 0.01 50);
+  --primary: oklch(0.65 0.16 25);
+  --primary-foreground: oklch(0.15 0.015 30);
+  --secondary: oklch(0.28 0.04 35);
+  --secondary-foreground: oklch(0.92 0.01 50);
+  --muted: oklch(0.25 0.025 35);
+  --muted-foreground: oklch(0.62 0.02 45);
+  --accent: oklch(0.68 0.10 350);
+  --accent-foreground: oklch(0.15 0.015 30);
+  --destructive: oklch(0.58 0.20 12);
+  --destructive-foreground: oklch(0.95 0.01 50);
+  --border: oklch(0.32 0.03 35);
+  --input: oklch(0.30 0.035 35);
+  --ring: oklch(0.65 0.16 25);
+  
+  /* Chart Tokens */
+  --chart-1: oklch(0.65 0.16 25);
+  --chart-2: oklch(0.68 0.14 145);
+  --chart-3: oklch(0.72 0.10 350);
+  --chart-4: oklch(0.70 0.12 45);
+  --chart-5: oklch(0.62 0.12 280);
+  
+  /* Sidebar Tokens */
+  --sidebar: oklch(0.17 0.017 32);
+  --sidebar-foreground: oklch(0.88 0.01 50);
+  --sidebar-primary: oklch(0.65 0.16 25);
+  --sidebar-primary-foreground: oklch(0.15 0.015 30);
+  --sidebar-accent: oklch(0.28 0.04 35);
+  --sidebar-accent-foreground: oklch(0.92 0.01 50);
+  --sidebar-border: oklch(0.30 0.03 35);
+  --sidebar-ring: oklch(0.65 0.16 25);
+}
+
+@theme inline {
+  /* Shadcn Core Mapping */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Charts Mapping */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar Mapping */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Typography */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Radius */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans min-h-screen;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  code, pre {
+    @apply font-mono;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-primary;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40;
+  }
+}
