@@ -35,10 +35,12 @@ function SectionHeading({ label, title, subtitle }: { label: string; title: stri
 
 export default function Home() {
   const [displayAlbums, setDisplayAlbums] = useState(albums);
+  const [albumsSource, setAlbumsSource] = useState("static");
   useEffect(() => {
     if (!driveConfigured()) return;
     fetchDriveAlbums().then((driveAlbums) => {
       if (driveAlbums.length > 0) setDisplayAlbums(driveAlbums);
+      if (driveAlbums.length > 0) setAlbumsSource("drive");
     });
   }, []);
   return (
@@ -152,6 +154,7 @@ export default function Home() {
           </motion.div>
 
           <motion.div
+            key={albumsSource}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
