@@ -3,6 +3,8 @@ import { Camera, Calendar, Users, ChevronDown, MapPin } from "lucide-react";
 import { IMAGES } from "@/assets/images";
 import { AlbumCard } from "@/components/AlbumCard";
 import { albums, events, familyMembers, eventTypeIcons } from "@/lib/data";
+import { useEffect, useState } from "react";
+import { fetchDriveAlbums, driveConfigured } from "@/lib/googleDrive";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -32,6 +34,13 @@ function SectionHeading({ label, title, subtitle }: { label: string; title: stri
 }
 
 export default function Home() {
+  const [displayAlbums, setDisplayAlbums] = useState(albums);
+  useEffect(() => {
+    if (!driveConfigured()) return;
+    fetchDriveAlbums().then((driveAlbums) => {
+      if (driveAlbums.length > 0) setDisplayAlbums(driveAlbums);
+    });
+  }, []);
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
@@ -149,7 +158,7 @@ export default function Home() {
             variants={staggerParent}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {albums.map((album) => (
+            {displayAlbums.map((album) => (
               <motion.div key={album.id} variants={fadeUp}>
                 <AlbumCard album={album} />
               </motion.div>
