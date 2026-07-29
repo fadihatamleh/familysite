@@ -162,7 +162,7 @@ export default function Home() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {displayAlbums.map((album) => (
-              <motion.div key={album.id} variants={fadeUp}>
+              <motion.div key={album.id} initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", stiffness: 280, damping: 30 }}>
                 <AlbumCard album={album} />
               </motion.div>
             ))}
