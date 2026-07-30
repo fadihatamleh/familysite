@@ -149,6 +149,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
                       </button>
                     ))}
                   </div>
+              )}
               {visibleCount < album.photos.length && (
               <button onClick={() => setVisibleCount((c) => c + 30)} className="mt-2 text-xs font-medium text-primary hover:underline">Load more photos</button>
                 )}
