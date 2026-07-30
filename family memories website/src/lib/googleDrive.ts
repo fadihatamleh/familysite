@@ -105,7 +105,7 @@ export async function fetchDriveAlbums(): Promise<Album[]> {
                         if (images.length === 0) return null;
 
                                      const cover = images[0];
-                        const photos = images.slice(0, 30).map((f) => resize(f.thumbnailLink as string, 1600));
+                        const photos = images.map((f) => resize(f.thumbnailLink as string, 1600));
 
                                      const album: Album = {
                                                  id: folder.id,
@@ -133,7 +133,7 @@ export async function fetchDriveAlbums(): Promise<Album[]> {
                         photoCount: looseFiles.length,
                         date: "",
                         category: "everyday",
-                        photos: looseFiles.slice(0, 30).map((f) => resize(f.thumbnailLink as string, 1600)),
+                        photos: looseFiles.map((f) => resize(f.thumbnailLink as string, 1600)),
               });
       }
 
