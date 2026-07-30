@@ -10,6 +10,7 @@ interface AlbumCardProps {
 export function AlbumCard({ album }: AlbumCardProps) {
   const [open, setOpen] = useState(false);
   const [photoIdx, setPhotoIdx] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(30);
 
   const prev = () => setPhotoIdx((i) => (i - 1 + album.photos.length) % album.photos.length);
   const next = () => setPhotoIdx((i) => (i + 1) % album.photos.length);
@@ -22,7 +23,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
         className="group cursor-pointer rounded-xl overflow-hidden bg-card border border-border"
         style={{ boxShadow: "0 4px 16px -4px rgba(139,69,19,0.08)" }}
-        onClick={() => { setOpen(true); setPhotoIdx(0); }}
+        onClick={() => { setOpen(true); setPhotoIdx(0); setVisibleCount(30); }}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
@@ -80,7 +81,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative bg-card rounded-2xl overflow-hidden max-w-3xl w-full shadow-2xl"
+              className="relative bg-card rounded-2xl overflow-hidden max-w-6xl w-full shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close */}
@@ -92,11 +93,11 @@ export function AlbumCard({ album }: AlbumCardProps) {
               </button>
 
               {/* Image */}
-              <div className="relative h-72 md:h-96 bg-muted">
+              <div className="relative h-[70vh] md:h-[80vh] bg-muted">
                 <img
                   src={album.photos[photoIdx]}
                   alt={`${album.title} photo ${photoIdx + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
                 {/* Prev/Next */}
                 {album.photos.length > 1 && (
@@ -136,7 +137,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
                 {/* Thumbnail strip */}
                 {album.photos.length > 1 && (
                   <div className="flex gap-2 mt-4">
-                    {album.photos.map((p, i) => (
+                    {album.photos.slice(0, visibleCount).map((p, i) => (
                       <button
                         key={i}
                         onClick={() => setPhotoIdx(i)}
@@ -148,6 +149,8 @@ export function AlbumCard({ album }: AlbumCardProps) {
                       </button>
                     ))}
                   </div>
+              {visibleCount < album.photos.length && (
+              <button onClick={() => setVisibleCount((c) => c + 30)} className="mt-2 text-xs font-medium text-primary hover:underline">Load more photos</button>
                 )}
               </div>
             </motion.div>
